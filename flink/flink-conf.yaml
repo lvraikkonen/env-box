@@ -1,0 +1,2 @@
+jobmanager.rpc.address: flink-jm
+taskmanager.numberOfTaskSlots: 10
