@@ -376,18 +376,18 @@
   </property>
   <property>
     <name>javax.jdo.option.ConnectionURL</name>
-    <value>jdbc:mysql://mysql/hive?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+    <value>jdbc:mysql://172.17.0.2:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false</value>
     <description>JDBC connect string for a JDBC metastore</description>
   </property>
   <property>
     <name>javax.jdo.option.ConnectionUserName</name>
-    <value>root</value>
+    <value>hive</value>
     <description>username to use against metastore database</description>
   </property>
 
   <property>
     <name>javax.jdo.option.ConnectionPassword</name>
-    <value>hadoop</value>
+    <value>123456</value>
     <description>password to use against metastore database</description>
   </property>
 
