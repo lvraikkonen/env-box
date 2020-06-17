@@ -15,13 +15,12 @@ RUN mkdir -p /usr/local/java
 # RUN tar -zxvf jdk-8u251-linux-x64.tar.gz -C /usr/local/java/ && \
 #     rm jdk-8u251-linux-x64.tar.gz 
 ADD jdk-8u251-linux-x64.tar.gz /usr/local/java/
-# make a symbol link
-RUN ln -s /usr/local/java/jdk1.8.0_251 /usr/local/java/jdk
+
 # set environment variables
-ENV JAVA_HOME /usr/local/java/jdk
-ENV JRE_HOME ${JAVA_HOME}/jre
+ENV JAVA_HOME=/usr/local/java/jdk1.8.0_251
+ENV JRE_HOME=${JAVA_HOME}/jre
 ENV CLASSPATH .:${JAVA_HOME}/lib:${JRE_HOME}/lib
-ENV PATH ${JAVA_HOME}/bin:$PATH
+ENV PATH=${JAVA_HOME}/bin:$PATH
 
 # install hadoop 2.7.7
 ENV HADOOP_VERSION=2.7.7
