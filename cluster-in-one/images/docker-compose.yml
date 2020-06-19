@@ -1,0 +1,81 @@
+version: '2'
+services:
+  hadoop-slave1:
+    image: lvraikkonen/hive:2.3.7
+    container_name: hadoop-slave1
+    privileged: true
+    # volumes:
+    #   - "./volume/hadoop/work/slave1:/works"
+    #   - "./volume/hadoop/logs/slave1:/root/hadoop/logs/"
+    #   - "./volume/hadoop/tmp/slave1:/tmp"
+    hostname: hadoop-slave1
+    networks:
+      - hadoop
+    tty: true
+    command: /usr/sbin/init
+  
+  hadoop-slave2:
+    image: lvraikkonen/hive:2.3.7
+    container_name: hadoop-slave2
+    privileged: true
+    # volumes:
+    #   - "./volume/hadoop/work/slave2:/works"
+    #   - "./volume/hadoop/logs/slave2:/root/hadoop/logs/"
+    #   - "./volume/hadoop/tmp/slave2:/tmp"
+    hostname: hadoop-slave2
+    networks:
+      - hadoop
+    tty: true
+    command: /usr/sbin/init
+      
+  hadoop-slave3:
+    image: lvraikkonen/hive:2.3.7
+    container_name: hadoop-slave3
+    privileged: true
+    # volumes:
+    #   - "./volume/hadoop/work/slave3:/works"
+    #   - "./volume/hadoop/logs/slave3:/root/hadoop/logs/"
+    #   - "./volume/hadoop/tmp/slave3:/tmp"
+    hostname: hadoop-slave3
+    networks:
+      - hadoop
+    tty: true
+    command: /usr/sbin/init
+
+  mysql:
+    image: mysql:5.7.30
+    volumes:
+      - "./volume/mysql:/var/lib/mysql"
+    container_name: mysql
+    hostname: mysql
+    networks:
+      - hadoop
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    tty: true
+
+  hadoop-master:
+    image: lvraikkonen/hive:2.3.7
+    container_name: hadoop-master
+    privileged: true
+    ports:
+      - "5070:50070"
+      - "8088:8088"
+    # volumes:
+    #   - "./volume/hadoop/work/master:/works"
+    #   - "./volume/hadoop/logs/master:/root/hadoop/logs/"
+    #   - "./volume/hadoop/tmp/master:/tmp"
+    #   - "./volume/code:/code"
+    hostname: hadoop-master
+    links:
+      - hadoop-slave1
+      - hadoop-slave2
+      - hadoop-slave3
+      - mysql
+    networks:
+      - hadoop
+    tty: true
+    command: /usr/sbin/init
+
+networks:
+  hadoop:

@@ -5,6 +5,9 @@ __pycache__/
 
 *.tar.gz
 *.tgz
+./volume
+volume/
+
 
 # C extensions
 *.so
