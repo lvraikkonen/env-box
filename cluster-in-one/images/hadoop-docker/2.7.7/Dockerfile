@@ -38,16 +38,13 @@ ADD config/hadoop/* $HADOOP_HOME/etc/hadoop/
 ADD config/scripts/start-hadoop.sh /root/start-hadoop.sh
 ADD config/scripts/run-wordcount.sh /root/run-wordcount.sh
 
-#建立HDFS目录，日志目录. 格式化NameNode
-#RUN mkdir -p /works/hadoop/dfs/name && \ 
-#    mkdir -p /works/hadoop/dfs/data && \
-#    mkdir -p /works/hadoop/dfs/namesecondary && \
-#    mkdir $HADOOP_HOME/logs && \
-#    $HADOOP_HOME/bin/hdfs namenode -format
 RUN chmod +x /root/start-hadoop.sh && \
     chmod +x /root/run-wordcount.sh && \
     chmod +x $HADOOP_HOME/sbin/start-dfs.sh && \
     chmod +x $HADOOP_HOME/sbin/start-yarn.sh 
+
+RUN dos2unix /root/start-hadoop.sh && \
+    dos2unix /root/run-wordcount.sh
 
 # format namenode
 RUN ${HADOOP_HOME}/bin/hdfs namenode -format
