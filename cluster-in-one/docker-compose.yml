@@ -17,6 +17,6 @@ services:
     build: ./images/hive-docker/2.3.7
     image: lvraikkonen/hive:2.3.7
 
-  # spark-2.1.0:
-  #   build: ./images/spark-docker/2.4.5
-  #   image: lvraikkonen/spark:2.4.5
+  spark-2.4.5:
+    build: ./images/spark-docker/2.4.5
+    image: lvraikkonen/spark:2.4.5

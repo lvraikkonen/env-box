@@ -1,0 +1,66 @@
+version: '2'
+services:
+  spark-slave1:
+    image: lvraikkonen/spark:2.4.5
+    container_name: spark-slave1
+    hostname: hadoop-slave1
+    networks:
+      spark:
+        aliases: 
+          - hadoop-slave1
+    tty: true
+  
+  spark-slave2:
+    image: lvraikkonen/spark:2.4.5
+    container_name: spark-slave2
+    hostname: hadoop-slave2
+    networks:
+      spark:
+        aliases: 
+          - hadoop-slave2
+    tty: true
+
+  spark-slave3:
+    image: lvraikkonen/spark:2.4.5
+    container_name: spark-slave3
+    hostname: hadoop-slave3
+    networks:
+      spark:
+        aliases: 
+          - hadoop-slave3
+    tty: true
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - "./volume/mysql:/var/lib/mysql"
+    container_name: mysql
+    hostname: mysql
+    networks:
+      - spark
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    tty: true
+
+  spark-master:
+    image: lvraikkonen/spark:2.4.5
+    ports:
+      - "50070:50070"
+      - "8088:8088"
+      - "8080:8080"
+      - "8042:8042"
+    container_name: spark-master
+    hostname: hadoop-master
+    links:
+      - spark-slave1
+      - spark-slave2
+      - spark-slave3
+      - mysql
+    networks:
+      spark:
+        aliases: 
+          - hadoop-master
+    tty: true
+
+networks:
+  spark:
