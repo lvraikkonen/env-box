@@ -7,7 +7,9 @@ __pycache__/
 *.tgz
 ./volume
 volume/
-
+zoo1/
+zoo2/
+zoo3/
 
 # C extensions
 *.so
