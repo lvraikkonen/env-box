@@ -1,0 +1,63 @@
+version: "3.7"
+services:
+   
+  spark-slave1:
+    image: lvraikkonen/spark:2.4.6
+    container_name: spark-slave1
+    hostname: spark-slave1
+    privileged: true
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=128m
+      - SPARK_EXECUTOR_MEMORY=256m
+      # - "PYSPARK_PYTHON=/usr/bin/python3"
+    # volumes:
+    #    - ./apps:/opt/apps
+    #    - ./data:/opt/data
+    #    - ./logs:/opt/spark/logs
+    networks:
+      - spark
+    command: /usr/sbin/init
+
+  spark-slave2:
+    image: lvraikkonen/spark:2.4.6
+    container_name: spark-slave2
+    hostname: spark-slave2
+    privileged: true
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=128m
+      - SPARK_EXECUTOR_MEMORY=256m
+    networks:
+      - spark
+    command: /usr/sbin/init
+  
+
+  spark-master:
+    image: lvraikkonen/spark:2.4.6
+    container_name: spark-master
+    hostname: spark-master
+    privileged: true
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+      - "18888:18888"
+    # volumes:
+    #    - ./apps:/opt/apps
+    #    - ./data:/opt/data
+    #    - ./logs:/opt/spark/logs
+    environment:
+      - "SPARK_LOCAL_IP=spark-master"
+    networks:
+      - spark
+    links:
+      - spark-slave1
+      - spark-slave2
+    command: /usr/sbin/init
+    
+networks:
+  spark:

@@ -17,8 +17,9 @@
 # - SPARK_LOCAL_DIRS, storage directories to use on this node for shuffle and RDD data
 # - MESOS_NATIVE_LIBRARY, to point to your libmesos.so if you use Mesos
 
+export JAVA_HOME=/usr/lib/jvm/java-openjdk
 export SPARK_DIST_CLASSPATH=$($HADOOP_HOME/bin/hadoop classpath)
-export SPARK_LOCAL_DIRS=/works/spark
+# export SPARK_LOCAL_DIRS=/works/spark
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 
 # Options read in YARN client mode
@@ -41,7 +42,7 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 
 export HIVE_HOME=/root/hive
 export SPARK_WORKER_MEMORY=2g
-export SPARK_MASTER_IP=hadoop-master
+export SPARK_MASTER_IP=spark-master
 export HIVE_CONF_DIR=$HIVE_HOME/conf
 
 # - SPARK_WORKER_PORT / SPARK_WORKER_WEBUI_PORT, to use non-default ports for the worker
