@@ -12,10 +12,11 @@ My big data learning environment all in one box based on Docker
 - [x] Java环境: JDK 8-251
 - [x] Hive 2.3.7
 - [x] MySQL 5.7.30
-- [ ] Spark 2.4.5
+- [x] Spark 2.4.6
+- [x] Spark 3.0.0
 - [ ] Flink 1.10.0
-- [ ] Zookeeper
-- [ ] Kafka
+- [x] Zookeeper
+- [x] Kafka
 
 
 
