@@ -1,7 +1,7 @@
 version: '2'
 services:
   spark-slave1:
-    image: lvraikkonen/spark:2.4.6
+    image: lvraikkonen/spark:3.0.0
     container_name: spark-slave1
     privileged: true
     # volumes:
@@ -17,7 +17,7 @@ services:
     command: /usr/sbin/init
   
   spark-slave2:
-    image: lvraikkonen/spark:2.4.6
+    image: lvraikkonen/spark:3.0.0
     container_name: spark-slave2
     privileged: true
     # volumes:
@@ -33,7 +33,7 @@ services:
     command: /usr/sbin/init
       
   spark-slave3:
-    image: lvraikkonen/spark:2.4.6
+    image: lvraikkonen/spark:3.0.0
     container_name: spark-slave3
     privileged: true
     # volumes:
@@ -61,7 +61,7 @@ services:
     tty: true
 
   spark-master:
-    image: lvraikkonen/spark:2.4.6
+    image: lvraikkonen/spark:3.0.0
     container_name: spark-master
     privileged: true
     ports:

@@ -14,7 +14,7 @@ ENV JRE_HOME=${JAVA_HOME}/jre
 ENV CLASSPATH .:${JAVA_HOME}/lib:${JRE_HOME}/lib
 ENV PATH=$PATH:${JAVA_HOME}/bin:$SCALA_HOME/bin:$SPARK_HOME/bin:$SCALA_HOME/bin
 
-ENV SPARK_VERSION 2.4.6
+ENV SPARK_VERSION 3.0.0
 ENV HADOOP_VERSION 2.7
 ENV PYTHON_VERSION 3.7.6
 ENV SPARK_MASTER_LOG $SPARK_HOME/logs
@@ -28,12 +28,12 @@ ENV SPARK_MASTER_LOG $SPARK_HOME/logs
 #     rm -f spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
 # 	mkdir -p ${SPARK_MASTER_LOG} 
 
-COPY spark-2.4.6-bin-hadoop2.7.tgz /root/spark-2.4.6-bin-hadoop2.7.tgz
+COPY spark-3.0.0-bin-hadoop2.7.tgz /root/spark-3.0.0-bin-hadoop2.7.tgz
 
 RUN cd /root && \ 
-    tar -zxvf spark-2.4.6-bin-hadoop2.7.tgz -C /root/ && \
-    mv /root/spark-2.4.6-bin-hadoop2.7 $SPARK_HOME && \
-    rm -f spark-2.4.6-bin-hadoop2.7.tgz && \
+    tar -zxvf spark-3.0.0-bin-hadoop2.7.tgz -C /root/ && \
+    mv /root/spark-3.0.0-bin-hadoop2.7 $SPARK_HOME && \
+    rm -f spark-3.0.0-bin-hadoop2.7.tgz && \
 	mkdir -p ${SPARK_MASTER_LOG} 
 
 # ENV SPARK_MASTER_PORT 7077
