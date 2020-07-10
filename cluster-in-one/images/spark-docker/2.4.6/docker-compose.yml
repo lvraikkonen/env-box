@@ -107,7 +107,7 @@ services:
       - "8080:8080"
       - "7077:7077"
       - "6066:6066"
-      # - "18888:18888"
+      - "8090:18080" # historyserver
     # volumes:
     #   - "./volume/hadoop/work/master:/works"
     #   - "./volume/hadoop/logs/master:/root/hadoop/logs/"

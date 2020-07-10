@@ -59,3 +59,8 @@ export HIVE_CONF_DIR=$HIVE_HOME/conf
 # - SPARK_PID_DIR       Where the pid file is stored. (Default: /tmp)
 # - SPARK_IDENT_STRING  A string representing this instance of spark. (Default: $USER)
 # - SPARK_NICENESS      The scheduling priority for daemons. (Default: 0)
+
+export SPARK_HISTORY_OPTS="
+-Dspark.history.ui.port=18080 
+-Dspark.history.fs.logDirectory=hdfs://hadoop-master:9000/directory 
+-Dspark.history.retainedApplications=30"

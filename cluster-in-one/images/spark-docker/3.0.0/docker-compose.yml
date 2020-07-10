@@ -9,6 +9,15 @@ services:
     #   - "./volume/hadoop/logs/slave1:/root/hadoop/logs/"
     #   - "./volume/hadoop/tmp/slave1:/tmp"
     hostname: hadoop-slave1
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 8881
+      - 8081
+    ports:
+      - 8081:8081
     networks:
       spark:
         aliases: 
@@ -25,6 +34,15 @@ services:
     #   - "./volume/hadoop/logs/slave2:/root/hadoop/logs/"
     #   - "./volume/hadoop/tmp/slave2:/tmp"
     hostname: hadoop-slave2
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 8881
+      - 8082
+    ports:
+      - 8082:8082
     networks:
       spark:
         aliases: 
@@ -41,6 +59,15 @@ services:
     #   - "./volume/hadoop/logs/slave3:/root/hadoop/logs/"
     #   - "./volume/hadoop/tmp/slave3:/tmp"
     hostname: hadoop-slave3
+    expose:
+      - 7012
+      - 7013
+      - 7014
+      - 7015
+      - 8881
+      - 8083
+    ports:
+      - 8083:8083
     networks:
       spark:
         aliases: 
@@ -64,12 +91,23 @@ services:
     image: lvraikkonen/spark:3.0.0
     container_name: spark-master
     privileged: true
+    expose:
+      - 4040
+      - 7001
+      - 7002
+      - 7003
+      - 7004
+      - 7005
+      - 7077
+      - 6066
     ports:
+      - "4040:4040"
       - "5070:50070"
       - "8088:8088"
       - "8080:8080"
       - "7077:7077"
-      - "18888:18888"
+      - "6066:6066"
+      - "8090:18080" # historyserver
     # volumes:
     #   - "./volume/hadoop/work/master:/works"
     #   - "./volume/hadoop/logs/master:/root/hadoop/logs/"
