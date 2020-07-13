@@ -50,4 +50,15 @@
         <value>true</value>
     </property>
 
+    <property>
+        <name>hive.execution.engine</name>
+        <value>spark</value>
+        <description>
+            Expects one of [mr, tez, spark].
+            Chooses execution engine. Options are: mr (Map reduce, default), tez, spark. While MR
+            remains the default engine for historical reasons, it is itself a historical engine
+            and is deprecated in Hive 2 line. It may be removed without further warning.
+        </description>
+    </property>
+
 </configuration>
