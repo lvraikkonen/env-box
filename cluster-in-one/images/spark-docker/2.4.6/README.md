@@ -20,3 +20,9 @@ Docker-compose up -d --scale spark-worker=2
 cd spark
 ./sbin/start-all.sh
 ```
+
+## 启动HistoryServer
+
+``` shell
+./sbin/start-historyserver.sh
+```
