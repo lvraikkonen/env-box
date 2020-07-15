@@ -1,7 +1,7 @@
 ## env-box
 My big data learning environment all in one box based on Docker
 
-基于Docker的Hadoop开发测试环境使用说明
+基于Docker的Hadoop/Hive/Spark开发测试环境使用说明
 
 ## 基本软件环境
 
@@ -11,16 +11,18 @@ My big data learning environment all in one box based on Docker
 - [x] 操作系统: CentOS 7
 - [x] Java环境: JDK 8-251
 - [x] Hive 2.3.7
+- [] Hbase
 - [x] MySQL 5.7.30
 - [x] Spark 2.4.6
 - [x] Spark 3.0.0
 - [ ] Flink 1.10.0
 - [x] Zookeeper
 - [x] Kafka
+- [x] Airflow 1.10.9 集群
 
 
 
-j基于docker-compose管理镜像和容器，并进行集群的编排
+基于docker-compose管理镜像和容器，并进行集群的编排
 
 
 
@@ -41,37 +43,19 @@ j基于docker-compose管理镜像和容器，并进行集群的编排
 - 拉取MySQL 5.7 官方镜像
 
 ```
-docker pull mysql:5.7
+docker pull mysql:5.7.30
 ```
 
-- 拉取CentOS 6 官方镜像
+- 拉取CentOS 7 官方镜像
 
 ```
 docker pull centos:7
 ```
 
-- 拉取基本操作系统和OpenJDK环境，包含CentOS 6和OpenJDK 8
+- 构建所需镜像含CentOS 6和OpenJDK 8
 
 ```
-docker pull twinsen/os-jvm:centos6-openjdk8
-```
-
-- 拉取Hadoop环境，包含Hadoop 2.7.2
-
-```
-docker pull twinsen/hadoop:2.7.2
-```
-
-- 拉取Hive环境，包含Hive 2.1.1
-
-```
-docker pull twinsen/hive:2.1.1
-```
-
-- 拉取Spark环境，包含Spark 2.1.0
-
-```
-docker pull twinsen/spark:2.1.0
+docker-compose build
 ```
 
 
@@ -89,18 +73,12 @@ docker pull twinsen/spark:2.1.0
 ```
 #[创建容器]
 docker-compose up -d
-#[格式化HDFS。第一次启动集群前，需要先格式化HDFS；以后每次启动集群时，都不需要再次格式化HDFS]
-docker-compose exec spark-master hdfs namenode -format
 #[初始化Hive数据库。仅在第一次启动集群前执行一次]
 docker-compose exec spark-master schematool -dbType mysql -initSchema
-#[将Spark相关的jar文件打包，存储在/code目录下，命名为spark-libs.jar]
-docker-compose exec spark-master jar cv0f /code/spark-libs.jar -C /root/spark/jars/ .
+
 #[启动HDFS]
 docker-compose exec spark-master start-dfs.sh
-#[在HDFS中创建/user/spark/share/lib/目录]
-docker-compose exec spark-master hadoop fs -mkdir -p /user/spark/share/lib/
-#[将/code/spark-libs.jar文件上传至HDFS下的/user/spark/share/lib/目录下]
-docker-compose exec spark-master hadoop fs -put /code/spark-libs.jar /user/spark/share/lib/
+
 #[关闭HDFS]
 docker-compose exec spark-master stop-dfs.sh
 ```
@@ -135,6 +113,10 @@ docker-compose exec spark-master stop-dfs.sh
 docker-compose down
 ```
 
+
+## 挂载APP文件夹
+
+在docker-compose编排文件中，挂载本地文件夹到容器中，开发代码直接可以在容器中运行
 
 
 ## 开发与测试过程中的集群使用方法
