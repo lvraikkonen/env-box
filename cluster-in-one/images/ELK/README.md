@@ -1,7 +1,7 @@
 # **Overview**
-Docker Compose for 3 Node Elasticsearch Cluster and Kibana Instance for development purposes.
+Docker Compose for 3 Node Elasticsearch Cluster and Kibana Instance for **development purposes**.
 
-- [x] 3 Node Elasticsearch version 
+- [x] 1 Node Elasticsearch version 
 - [x] Kibana version 
 - [ ] Audit Beat version 
 - [ ] Metric Beat version 
@@ -10,7 +10,7 @@ Docker Compose for 3 Node Elasticsearch Cluster and Kibana Instance for developm
 - [ ] File Beat version 
 - [ ] APM Server version 
 - [ ] APM Search 
-- [ ] NGINX
+- [x] NGINX
 
 # **NOTES**
 - If you need Open Source version then change Elasticsearch and Kibana Images to elasticsearch-oss and kibana-oss respectively.
@@ -48,11 +48,12 @@ docker-compose down
 
 #### 1. 初始化内置用户的密码
 
+
 ```console
-$ docker-compose exec -T elasticsearch bin/elasticsearch-setup-passwords auto --batch
+$ docker-compose exec -T es01 bin/elasticsearch-setup-passwords auto --batch
 ```
 
-6个内置账户将会启用，记录下他们的密码
+6个内置账户将会启用，记录下他们的密码 (如果失败，重试几次？？选举需要时间)
 
 #### 2. Unset the bootstrap password (_optional_)
 
@@ -93,7 +94,7 @@ http://localhost:5601
 
 ### **Accessing Kibana through Nginx**
 ```
-http://localhost:8080
+http://localhost:8881
 ```
 
 ### **Access Elasticsearch**

@@ -1,23 +1,88 @@
 version: '3.2'
 
 services:
-  elasticsearch:
+  es01:
     build:
       context: elasticsearch/
       args:
         ELK_VERSION: $ELK_VERSION
-    volumes:
-      - "./volume/data01:/usr/share/elasticsearch/data"
-      - "./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
-    ports:
-      - "9200:9200"
-      - "9300:9300"
+
+    container_name: es01
     environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      ELASTIC_PASSWORD: changeme
-      # Use single node discovery in order to disable production mode and avoid bootstrap checks
-      # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
-      discovery.type: single-node
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.license.self_generated.type=trial
+      - xpack.security.enabled=true
+      - xpack.monitoring.collection.enabled=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./volume/data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - elk
+
+
+  es02:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.license.self_generated.type=trial
+      - xpack.security.enabled=true
+      - xpack.monitoring.collection.enabled=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./volume/data02:/usr/share/elasticsearch/data
+    ports:
+      - 9201:9200
+    networks:
+      - elk
+  
+
+  es03:
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: $ELK_VERSION
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.license.self_generated.type=trial
+      - xpack.security.enabled=true
+      - xpack.monitoring.collection.enabled=true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./volume/data03:/usr/share/elasticsearch/data
+    ports:
+      - 9202:9200
     networks:
       - elk
 
@@ -44,7 +109,9 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch
+      - es01
+      - es02
+      - es03
 
   kibana:
     build:
@@ -61,16 +128,22 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch
+      - es01
+      - es02
+      - es03
+  
+  nginx:
+    image: nginx:latest
+    ports:
+        - 8881:80
+    volumes:
+        - ./nginx-config/:/etc/nginx/conf.d/
+    command: /bin/bash -c "nginx -g 'daemon off;'"
+    ulimits:
+      nproc: 65535
+    networks:
+      - elk
 
 networks:
   elk:
     driver: bridge
-
-volumes:
-  data01:
-    driver: local
-  data02:
-    driver: local
-  data03:
-    driver: local
