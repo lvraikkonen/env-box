@@ -1,0 +1,157 @@
+version: '2'
+services:
+  hbase-slave1:
+    image: lvraikkonen/hbase:2.2.5
+    container_name: hbase-slave1
+    privileged: true
+    # volumes:
+    #   - "./volume/hadoop/work/slave1:/works"
+    #   - "./volume/hadoop/logs/slave1:/root/hadoop/logs/"
+    #   - "./volume/spark/logs/slave1:/root/spark/logs/"
+    #   - "./volume/hbase/slave1:/hworks/"
+    #   - "./volume/hbase/logs/slave1:/root/hbase/logs/"
+    hostname: hadoop-slave1
+    networks:
+      hbase-docker:
+        aliases: 
+          - hadoop-slave1
+    tty: true
+    command: /usr/sbin/init
+  
+  hbase-slave2:
+    image: lvraikkonen/hbase:2.2.5
+    container_name: hbase-slave2
+    privileged: true
+    # volumes:
+    #   - "./volume/hadoop/work/slave2:/works"
+    #   - "./volume/hadoop/logs/slave2:/root/hadoop/logs/"
+    #   - "./volume/spark/logs/slave2:/root/spark/logs/"
+    #   - "./volume/hbase/slave2:/hworks/"
+    #   - "./volume/hbase/logs/slave2:/root/hbase/logs/"
+    hostname: hadoop-slave2
+    networks:
+      hbase-docker:
+        aliases: 
+          - hadoop-slave2
+    tty: true
+    command: /usr/sbin/init
+
+  hbase-slave3:
+    image: lvraikkonen/hbase:2.2.5
+    container_name: hbase-slave3
+    privileged: true
+    # volumes:
+    #   - "./volume/hadoop/work/slave3:/works"
+    #   - "./volume/hadoop/logs/slave3:/root/hadoop/logs/"
+    #   - "./volume/spark/logs/slave3:/root/spark/logs/"
+    #   - "./volume/hbase/slave3:/hworks/"
+    #   - "./volume/hbase/logs/slave3:/root/hbase/logs/"
+    hostname: hadoop-slave3
+    networks:
+      hbase-docker:
+        aliases: 
+          - hadoop-slave3
+    tty: true
+    command: /usr/sbin/init
+
+
+  mysql:
+    image: mysql:5.7.30
+    volumes:
+      - "./volume/mysql:/var/lib/mysql"
+    container_name: mysql
+    hostname: mysql
+    networks:
+      - hbase-docker
+    environment:
+      - MYSQL_ROOT_PASSWORD=hadoop
+    tty: true
+  
+  # zoo1:
+  #   image: zookeeper:3.4.14
+  #   hostname: zoo1
+  #   container_name: zoo1
+  #   ports:
+  #   - 2181:2181
+  #   volumes:
+  #   - "./volume/zoo1/data:/data"
+  #   - "./volume/zoo1/datalog:/datalog"
+  #   environment:
+  #     ZOO_MY_ID: 1
+  #     ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+  #   networks:
+  #     hbase-docker:
+  #       aliases: 
+  #         - zoo1
+
+  # zoo2:
+  #   image: zookeeper:3.4.14
+  #   hostname: zoo2
+  #   container_name: zoo2
+  #   ports:
+  #   - 2182:2181
+  #   volumes:
+  #   - "./volume/zoo2/data:/data"
+  #   - "./volume/zoo2/datalog:/datalog"
+  #   environment:
+  #     ZOO_MY_ID: 2
+  #     ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+  #   networks:
+  #     hbase-docker:
+  #       aliases: 
+  #         - zoo2
+
+  # zoo3:
+  #   image: zookeeper:3.4.14
+  #   hostname: zoo3
+  #   container_name: zoo3
+  #   ports:
+  #   - 2183:2181
+  #   volumes:
+  #   - "./volume/zoo3/data:/data"
+  #   - "./volume/zoo3/datalog:/datalog"
+  #   environment:
+  #     ZOO_MY_ID: 3
+  #     ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+  #   networks:
+  #     hbase-docker:
+  #       aliases: 
+  #         - zoo3
+  
+  hbase-master:
+    image: lvraikkonen/hbase:2.2.5
+    container_name: hbase-master
+    privileged: true
+    ports:
+      - "50070:50070"
+      - "8088:8088"
+      - "8080:8080"
+      - "8042:8042"
+      - "16010:16010"
+    # volumes:
+    #   - "./volume/hadoop/work/master:/works"
+    #   - "./volume/hadoop/logs/master:/root/hadoop/logs/"
+    #   - "./volume/spark/logs/master:/root/spark/logs/"
+    #   - "./volume/hbase/master:/hworks/"
+    #   - "./volume/hbase/logs/master:/root/hbase/logs/"
+    #   - "./volume/code:/code"
+    hostname: hadoop-master
+    links:
+      - hbase-slave1
+      - hbase-slave2
+      - hbase-slave3
+      - mysql
+      # - zoo1
+      # - zoo2
+      # - zoo3
+    networks:
+      hbase-docker:
+        aliases: 
+          - hadoop-master
+    tty: true
+    command: /usr/sbin/init
+  
+
+
+networks:
+  hbase-docker:
