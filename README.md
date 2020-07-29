@@ -18,7 +18,7 @@ My big data learning environment all in one box based on Docker
 - [ ] Flink 1.10.0
 - [x] Zookeeper
 - [x] Kafka
-- [x] Airflow 1.10.9 集群
+- [x] Airflow 1.10.11 集群
 
 
 

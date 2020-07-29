@@ -1,8 +1,6 @@
-# VERSION 1.10.9
-# AUTHOR: xc0910@hotmail.com
+# VERSION 1.10.11
 # DESCRIPTION: Basic Airflow container
-# BUILD: docker build --rm -t benbendemo/docker-airflow .
-# SOURCE: https://github.com/benbendemo/docker-airflow
+# BUILD: docker build --rm -t lvraikkonen/docker-airflow:1.10.11 .
 
 FROM python:3.7-slim-buster
 
