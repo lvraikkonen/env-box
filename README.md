@@ -11,7 +11,7 @@ My big data learning environment all in one box based on Docker
 - [x] 操作系统: CentOS 7
 - [x] Java环境: JDK 8-251
 - [x] Hive 2.3.7
-- [] Hbase
+- [x] Hbase 2.2.5 using own zookeeper
 - [x] MySQL 5.7.30
 - [x] Spark 2.4.6
 - [x] Spark 3.0.0
@@ -27,11 +27,6 @@ My big data learning environment all in one box based on Docker
 
 
 ## 镜像依赖关系
-
-
-
-![](https://github.com/ruoyu-chen/hadoop-docker/raw/master/images/arch.jpeg)
-
 
 
 
