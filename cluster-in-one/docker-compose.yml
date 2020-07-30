@@ -9,17 +9,17 @@ services:
   #   build: ./images/os-jvm-docker/centos7-jdk8-251
   #   image: lvraikkonen/os-jvm:centos7-jdk8
 
-  # hadoop:
-  #   build: ./images/hadoop-docker/2.7.7
-  #   image: lvraikkonen/hadoop:2.7.7
+  hadoop:
+    build: ./images/hadoop-docker/2.7.7
+    image: lvraikkonen/hadoop:2.7.7
 
-  # hive-2.3.7:
-  #   build: ./images/hive-docker/2.3.7
-  #   image: lvraikkonen/hive:2.3.7
+  hive-2.3.7:
+    build: ./images/hive-docker/2.3.7
+    image: lvraikkonen/hive:2.3.7
 
-  # spark-2.4.6:
-  #   build: ./images/spark-docker/2.4.6
-  #   image: lvraikkonen/spark:2.4.6
+  spark-2.4.6:
+    build: ./images/spark-docker/2.4.6
+    image: lvraikkonen/spark:2.4.6
   
   # spark-3.0:
   #   build: ./images/spark-docker/3.0.0
